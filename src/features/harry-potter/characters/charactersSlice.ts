@@ -1,7 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+interface CharacterAttributes {
+  alias_names: string[];
+  blood_status: string | null;
+  born: string | null;
+  died: string | null;
+  family_members: string[];
+  house: string | null;
+  image: string | null | undefined;
+  jobs: string[];
+  name: string;
+  patronus: string | null;
+  romances: string[];
+  slug: string | null;
+  titles: string[];
+  wands: string[];
+  wiki: string;
+}
+
 interface Character {
-  data: unknown;
+  id: string;
+  attributes: CharacterAttributes;
+}
+
+interface Characters {
+  data: Character[];
 }
 
 export const universeHPotterApi = createApi({
@@ -9,7 +32,7 @@ export const universeHPotterApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.potterdb.com/' }),
   tagTypes: [],
   endpoints: (builder) => ({
-    getPotterCharacters: builder.query<Character, void>({
+    getPotterCharacters: builder.query<Characters, void>({
       query: () => 'v1/characters',
     }),
   }),

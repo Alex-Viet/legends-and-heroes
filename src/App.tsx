@@ -1,11 +1,7 @@
 import React from 'react';
-import { useGetPotterCharactersQuery } from './features/harry-potter/characters/charactersSlice';
+import { router } from './routing/Routes';
+import { RouterProvider } from 'react-router-dom';
 
-const App: React.FC = () => {
-  const { data } = useGetPotterCharactersQuery();
-  console.log('🚀 ~ App ~ data:', data);
-
-  return <div className="App"></div>;
+export const App: React.FC = () => {
+  return <RouterProvider router={router} />;
 };
-
-export default App;
