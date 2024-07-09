@@ -90,7 +90,7 @@ export const CharactersList: React.FC = () => {
                     src={
                       character.attributes.image
                         ? character.attributes.image
-                        : '/img/no_image.jpg'
+                        : './img/no_image.jpg'
                     }
                     alt={
                       character.attributes.name

@@ -51,7 +51,7 @@ export const CharactersDetails: React.FC = () => {
       <div className="my-8 text-white max-w-4xl">
         <div className="">
           <img
-            src={image ? image : '/img/no_image.jpg'}
+            src={image ? image : './img/no_image.jpg'}
             alt={name ? name : 'no-image'}
             className="h-auto max-w-56 object-cover rounded"
           />
