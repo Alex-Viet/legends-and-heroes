@@ -15,7 +15,7 @@ export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
   const [characters, setCharacters] = useState<Character[] | undefined>([]);
 
-  const { data, isLoading, error, isError } = useGetPotterCharactersQuery();
+  const { data, isLoading, error } = useGetPotterCharactersQuery();
 
   useEffect(() => {
     if (data?.data) {

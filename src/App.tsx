@@ -1,7 +1,11 @@
 import React from 'react';
-import { router } from './routing/Routes';
-import { RouterProvider } from 'react-router-dom';
+import { AppRoutes } from './routing/Routes';
+import { HashRouter } from 'react-router-dom';
 
 export const App: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <HashRouter>
+      <AppRoutes />
+    </HashRouter>
+  );
 };
