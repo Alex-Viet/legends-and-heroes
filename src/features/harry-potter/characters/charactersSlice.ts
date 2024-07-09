@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface CharacterAttributes {
+export interface CharacterAttributes {
   alias_names: string[];
   blood_status: string | null;
   born: string | null;
@@ -23,7 +23,7 @@ export interface Character {
   attributes: CharacterAttributes;
 }
 
-interface Characters {
+export interface Characters {
   data: Character[];
 }
 

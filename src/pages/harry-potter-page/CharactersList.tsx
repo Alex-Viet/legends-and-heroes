@@ -8,6 +8,7 @@ import {
   selectLikedCharacters,
   toggleLike,
 } from '../../features/harry-potter/likes/likesSlice';
+import { Link } from 'react-router-dom';
 
 export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
@@ -58,17 +59,17 @@ export const CharactersList: React.FC = () => {
           className="text-white p-3 rounded-full border-solid border-white border-2 hover:bg-white hover:text-black transition-all duration-200"
           onClick={() => setShowLiked((prev) => !prev)}
         >
-          show liked only
+          {showLiked ? 'show liked only' : 'show all'}
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {filteredCharacters?.length ? (
           filteredCharacters.map((character) => (
-            <div
+            <Link
+              to={`/character/${character.attributes.name}`}
               key={character.id}
-              className="p-3 max-w-sm bg-[#c9c9c9] rounded shadow flex flex-col justify-between"
             >
-              <div>
+              <div className="p-3 max-w-sm bg-[#c9c9c9] rounded shadow flex flex-col justify-between h-80 cursor-pointer">
                 <div className="flex justify-between">
                   <img
                     src={`/img/icons/${likedCharacters.includes(character.id) ? 'un' : ''}like.svg`}
@@ -82,7 +83,11 @@ export const CharactersList: React.FC = () => {
                         ? character.attributes.image
                         : '/img/no_image.jpg'
                     }
-                    alt={character.attributes.name}
+                    alt={
+                      character.attributes.name
+                        ? character.attributes.name
+                        : 'no-image'
+                    }
                     className="h-36 w-36 object-cover rounded-full"
                   />
                   <svg
@@ -112,25 +117,27 @@ export const CharactersList: React.FC = () => {
                   </svg>
                 </div>
 
-                <h2 className="my-2 text-2xl">{character.attributes.name}</h2>
-                <p className="text-gray-600">
+                <h2 className="my-2 text-2xl truncate">
+                  {character.attributes.name}
+                </h2>
+                <p className="text-gray-600 truncate">
                   {character.attributes.house &&
                     `house: ${character.attributes.house}`}
                 </p>
-                <p className="text-gray-600">
+                <p className="text-gray-600 truncate">
                   {character.attributes.alias_names.length > 0 &&
                     `alias: ${character.attributes.alias_names}`}
                 </p>
-                <p className="text-gray-600">
+                <p className="text-gray-600 truncate">
                   {character.attributes.patronus &&
                     `patronus: ${character.attributes.patronus}`}
                 </p>
-              </div>
 
-              <p className="text-xl underline mt-4 text-center cursor-pointer hover:no-underline hover:text-[#727272]">
-                Details
-              </p>
-            </div>
+                <p className="text-xl underline mt-4 text-center cursor-pointer hover:no-underline hover:text-[#727272]">
+                  Details
+                </p>
+              </div>
+            </Link>
           ))
         ) : (
           <div>
