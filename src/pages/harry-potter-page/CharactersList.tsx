@@ -81,7 +81,7 @@ export const CharactersList: React.FC = () => {
               <div className="p-3 max-w-sm bg-[#c9c9c9] rounded shadow flex flex-col justify-between h-80 cursor-pointer">
                 <div className="flex justify-between">
                   <img
-                    src={`/img/icons/${likedCharacters.includes(character.id) ? 'un' : ''}like.svg`}
+                    src={`./img/icons/${likedCharacters.includes(character.id) ? 'un' : ''}like.svg`}
                     alt="like"
                     className="w-7 h-7 cursor-pointer"
                     onClick={(e) => toggleLikes(e, character.id)}
