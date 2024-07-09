@@ -1,16 +1,28 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useGetPotterCharactersQuery } from '../../features/harry-potter/characters/charactersSlice';
+import { Loader } from '../../features/harry-potter/loader/Loader';
 
 export const CharactersDetails: React.FC = () => {
-  const { data } = useGetPotterCharactersQuery();
+  const { data, isLoading, error } = useGetPotterCharactersQuery();
   const { id } = useParams<{ id: string }>();
   const character = data?.data.find((char) => char.attributes.name === id);
 
+  if (isLoading) return <Loader />;
+  if (error)
+    return (
+      <div className="p-12 text-white text-center text-3xl">
+        Error loading character. Please try later
+      </div>
+    );
+
   if (!character)
     return (
-      <div className="p-8 text-white">
-        <h1 className="text-center text-5xl">Character not found</h1>
+      <div className="p-8 text-white text-center">
+        <h1 className="text-5xl my-4">Character not found</h1>
+        <Link to="/" className="text-xl underline hover:no-underline">
+          back to main page
+        </Link>
       </div>
     );
 

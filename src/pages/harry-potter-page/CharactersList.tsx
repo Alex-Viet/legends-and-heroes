@@ -9,12 +9,13 @@ import {
   toggleLike,
 } from '../../features/harry-potter/likes/likesSlice';
 import { Link } from 'react-router-dom';
+import { Loader } from '../../features/harry-potter/loader/Loader';
 
 export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
   const [characters, setCharacters] = useState<Character[] | undefined>([]);
 
-  const { data } = useGetPotterCharactersQuery();
+  const { data, isLoading, error, isError } = useGetPotterCharactersQuery();
 
   useEffect(() => {
     if (data?.data) {
@@ -48,6 +49,14 @@ export const CharactersList: React.FC = () => {
 
     setCharacters((prevChar) => prevChar?.filter((char) => char.id !== id));
   };
+
+  if (isLoading) return <Loader />;
+  if (error)
+    return (
+      <div className="p-12 text-white text-center text-3xl">
+        Error loading character. Please try later
+      </div>
+    );
 
   return (
     <div className="container mx-auto p-4">
