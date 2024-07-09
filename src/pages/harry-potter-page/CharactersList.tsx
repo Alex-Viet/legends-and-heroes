@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { useGetPotterCharactersQuery } from '../../features/harry-potter/characters/charactersSlice';
+import React, { useEffect, useState } from 'react';
+import {
+  Character,
+  useGetPotterCharactersQuery,
+} from '../../features/harry-potter/characters/charactersSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   selectLikedCharacters,
@@ -8,9 +11,15 @@ import {
 
 export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
+  const [characters, setCharacters] = useState<Character[] | undefined>([]);
 
   const { data } = useGetPotterCharactersQuery();
-  const characters = data?.data;
+
+  useEffect(() => {
+    if (data?.data) {
+      setCharacters(data.data);
+    }
+  }, [data]);
 
   const dispatch = useAppDispatch();
   const likedCharacters = useAppSelector(selectLikedCharacters);
@@ -28,6 +37,16 @@ export const CharactersList: React.FC = () => {
   const filteredCharacters = !showLiked
     ? characters?.filter((char) => likedCharacters.includes(char.id))
     : characters;
+
+  const deleteCharacter = (
+    evt: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    id: string,
+  ) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    setCharacters((prevChar) => prevChar?.filter((char) => char.id !== id));
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -74,6 +93,7 @@ export const CharactersList: React.FC = () => {
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-6 h-6 cursor-pointer"
+                    onClick={(e) => deleteCharacter(e, character.id)}
                   >
                     <g id="Icon">
                       <path

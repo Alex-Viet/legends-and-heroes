@@ -18,7 +18,7 @@ interface CharacterAttributes {
   wiki: string;
 }
 
-interface Character {
+export interface Character {
   id: string;
   attributes: CharacterAttributes;
 }
