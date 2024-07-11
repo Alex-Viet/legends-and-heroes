@@ -1,7 +1,7 @@
 # Welcome to the universes of various comics, films, TV series and animated series
 The Harry Potter universe was added first. Here you can find information about different characters of the universe. Added the ability to like or delete a character card, the “show liked cards” filter.
 
-Project deployment: Comig soon
+Project deployment: [Legends and heroes](https://alex-viet.github.io/legends-and-heroes)
 
 To clone the repository, run the command:
 `git clone https://github.com/Alex-Viet/legends-and-heroes`
