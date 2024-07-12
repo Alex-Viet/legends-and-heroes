@@ -25,6 +25,16 @@ export interface Character {
 
 export interface Characters {
   data: Character[];
+  meta: {
+    pagination: {
+      current: number;
+      last: number;
+    };
+  };
+}
+
+export interface CharacterById {
+  data: Character;
 }
 
 export const universeHPotterApi = createApi({
@@ -32,10 +42,14 @@ export const universeHPotterApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.potterdb.com/' }),
   tagTypes: [],
   endpoints: (builder) => ({
-    getPotterCharacters: builder.query<Characters, void>({
-      query: () => 'v1/characters',
+    getPotterCharacters: builder.query<Characters, { page: number }>({
+      query: ({ page }) => `v1/characters?page[number]=${page}&page[size]=24`,
+    }),
+    getPotterCharacterById: builder.query<CharacterById, string>({
+      query: (id) => `v1/characters/${id}`,
     }),
   }),
 });
 
-export const { useGetPotterCharactersQuery } = universeHPotterApi;
+export const { useGetPotterCharactersQuery, useGetPotterCharacterByIdQuery } =
+  universeHPotterApi;

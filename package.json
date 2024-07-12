@@ -1,6 +1,7 @@
 {
   "name": "legends-and-heroes",
   "version": "0.1.0",
+  "homepage": "https://alex-viet.github.io/legends-and-heroes",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",

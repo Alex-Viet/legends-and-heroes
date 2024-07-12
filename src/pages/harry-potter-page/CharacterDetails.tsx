@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useGetPotterCharactersQuery } from '../../features/harry-potter/characters/charactersSlice';
+import {
+  CharacterAttributes,
+  useGetPotterCharacterByIdQuery,
+} from '../../features/harry-potter/characters/charactersSlice';
 import { Loader } from '../../features/harry-potter/loader/Loader';
 
 export const CharactersDetails: React.FC = () => {
-  const { data, isLoading, error } = useGetPotterCharactersQuery();
   const { id } = useParams<{ id: string }>();
-  const character = data?.data.find((char) => char.attributes.name === id);
+
+  const { data, isLoading, error } = useGetPotterCharacterByIdQuery(id!);
+  const character = data?.data;
+  const attributes = character?.attributes;
 
   if (isLoading) return <Loader />;
   if (error)
@@ -41,7 +46,7 @@ export const CharactersDetails: React.FC = () => {
     titles,
     wands,
     wiki,
-  } = character.attributes;
+  } = attributes as CharacterAttributes;
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
@@ -51,7 +56,7 @@ export const CharactersDetails: React.FC = () => {
       <div className="my-8 text-white max-w-4xl">
         <div className="">
           <img
-            src={image ? image : '/img/no_image.jpg'}
+            src={image ? image : './img/no_image.jpg'}
             alt={name ? name : 'no-image'}
             className="h-auto max-w-56 object-cover rounded"
           />
