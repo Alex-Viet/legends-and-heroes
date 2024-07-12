@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/legends-and-heroes/static/css/main.bb58fded.css",
-    "main.js": "/legends-and-heroes/static/js/main.d19c898b.js",
+    "main.css": "/legends-and-heroes/static/css/main.b113e8b4.css",
+    "main.js": "/legends-and-heroes/static/js/main.f8aef34c.js",
     "static/js/453.feb096fe.chunk.js": "/legends-and-heroes/static/js/453.feb096fe.chunk.js",
     "index.html": "/legends-and-heroes/index.html",
-    "main.bb58fded.css.map": "/legends-and-heroes/static/css/main.bb58fded.css.map",
-    "main.d19c898b.js.map": "/legends-and-heroes/static/js/main.d19c898b.js.map",
+    "main.b113e8b4.css.map": "/legends-and-heroes/static/css/main.b113e8b4.css.map",
+    "main.f8aef34c.js.map": "/legends-and-heroes/static/js/main.f8aef34c.js.map",
     "453.feb096fe.chunk.js.map": "/legends-and-heroes/static/js/453.feb096fe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bb58fded.css",
-    "static/js/main.d19c898b.js"
+    "static/css/main.b113e8b4.css",
+    "static/js/main.f8aef34c.js"
   ]
 }
