@@ -10,6 +10,8 @@ import {
 } from '../../features/harry-potter/likes/likesSlice';
 import { Link } from 'react-router-dom';
 import { Loader } from '../../features/harry-potter/loader/Loader';
+import { DeleteSvgIcon } from '../../components/harry-potter/DeleteSvgIcon';
+import { Pagination } from '../../components/harry-potter/Pagination';
 
 export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
@@ -69,28 +71,6 @@ export const CharactersList: React.FC = () => {
       </div>
     );
 
-  const handlePrevPage = (
-    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
-  const handleNextPage = (
-    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    evt.preventDefault();
-    evt.stopPropagation();
-
-    if (totalPages && page < totalPages) {
-      setPage(page + 1);
-    }
-  };
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-5xl text-white text-center py-6">
@@ -104,37 +84,7 @@ export const CharactersList: React.FC = () => {
           {showLiked ? 'show liked only' : 'show all'}
         </button>
       </div>
-      <div className="flex justify-center items-center gap-3 pt-5">
-        <span
-          className="text-white cursor-pointer underline hover:no-underline"
-          onClick={() => setPage(1)}
-        >
-          first page
-        </span>
-        <button
-          className="text-white p-2 rounded-full border-solid border-white border-2 hover:bg-white hover:text-black disabled:opacity-75 transition-all duration-200"
-          disabled={page === 1}
-          onClick={(e) => handlePrevPage(e)}
-        >
-          prev
-        </button>
-        <span className="text-white">
-          page {page} of {totalPages}
-        </span>
-        <button
-          className="text-white p-2 rounded-full border-solid border-white border-2 hover:bg-white hover:text-black disabled:opacity-75 transition-all duration-200"
-          disabled={page === totalPages}
-          onClick={(e) => handleNextPage(e)}
-        >
-          next
-        </button>
-        <span
-          className="text-white cursor-pointer underline hover:no-underline"
-          onClick={() => setPage(totalPages)}
-        >
-          last page
-        </span>
-      </div>
+      <Pagination page={page} onPageChange={setPage} totalPages={totalPages} />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {filteredCharacters?.length ? (
           filteredCharacters.map((character) => (
@@ -160,31 +110,10 @@ export const CharactersList: React.FC = () => {
                     }
                     className="h-36 w-36 object-cover rounded-full"
                   />
-                  <svg
-                    clipRule="evenodd"
-                    fillRule="evenodd"
-                    strokeLinejoin="round"
-                    strokeMiterlimit="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6 cursor-pointer"
-                    onClick={(e) => deleteCharacter(e, character.id)}
-                  >
-                    <g id="Icon">
-                      <path
-                        d="m12 1.25c5.933 0 10.75 4.817 10.75 10.75s-4.817 10.75-10.75 10.75-10.75-4.817-10.75-10.75 4.817-10.75 10.75-10.75zm0 1.5c-5.105 0-9.25 4.145-9.25 9.25s4.145 9.25 9.25 9.25 9.25-4.145 9.25-9.25-4.145-9.25-9.25-9.25z"
-                        fill="#000000"
-                      ></path>
-                      <path
-                        d="m9.03 16.03c-.292.293-.768.293-1.06 0-.293-.292-.293-.768 0-1.06l7-7c.292-.293.768-.293 1.06 0 .293.292.293.768 0 1.06z"
-                        fill="#000000"
-                      ></path>
-                      <path
-                        d="m16.03 14.97c.293.292.293.768 0 1.06-.292.293-.768.293-1.06 0l-7-7c-.293-.292-.293-.768 0-1.06.292-.293.768-.293 1.06 0z"
-                        fill="#000000"
-                      ></path>
-                    </g>
-                  </svg>
+                  <DeleteSvgIcon
+                    deleteCharacter={deleteCharacter}
+                    id={character.id}
+                  />
                 </div>
 
                 <h2 className="my-2 text-2xl truncate">
