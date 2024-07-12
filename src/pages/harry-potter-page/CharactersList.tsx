@@ -14,8 +14,19 @@ import { Loader } from '../../features/harry-potter/loader/Loader';
 export const CharactersList: React.FC = () => {
   const [showLiked, setShowLiked] = useState<boolean>(true);
   const [characters, setCharacters] = useState<Character[] | undefined>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
-  const { data, isLoading, error } = useGetPotterCharactersQuery();
+  const { data, isLoading, error } = useGetPotterCharactersQuery({
+    page,
+  });
+
+  const totalPagesData = data?.meta.pagination.last;
+  useEffect(() => {
+    if (totalPagesData) {
+      setTotalPages(totalPagesData);
+    }
+  }, [totalPagesData]);
 
   useEffect(() => {
     if (data?.data) {
@@ -58,6 +69,28 @@ export const CharactersList: React.FC = () => {
       </div>
     );
 
+  const handlePrevPage = (
+    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = (
+    evt: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    if (totalPages && page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-5xl text-white text-center py-6">
@@ -71,13 +104,41 @@ export const CharactersList: React.FC = () => {
           {showLiked ? 'show liked only' : 'show all'}
         </button>
       </div>
+      <div className="flex justify-center items-center gap-3 pt-5">
+        <span
+          className="text-white cursor-pointer underline hover:no-underline"
+          onClick={() => setPage(1)}
+        >
+          first page
+        </span>
+        <button
+          className="text-white p-2 rounded-full border-solid border-white border-2 hover:bg-white hover:text-black disabled:opacity-75 transition-all duration-200"
+          disabled={page === 1}
+          onClick={(e) => handlePrevPage(e)}
+        >
+          prev
+        </button>
+        <span className="text-white">
+          page {page} of {totalPages}
+        </span>
+        <button
+          className="text-white p-2 rounded-full border-solid border-white border-2 hover:bg-white hover:text-black disabled:opacity-75 transition-all duration-200"
+          disabled={page === totalPages}
+          onClick={(e) => handleNextPage(e)}
+        >
+          next
+        </button>
+        <span
+          className="text-white cursor-pointer underline hover:no-underline"
+          onClick={() => setPage(totalPages)}
+        >
+          last page
+        </span>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {filteredCharacters?.length ? (
           filteredCharacters.map((character) => (
-            <Link
-              to={`/character/${character.attributes.name}`}
-              key={character.id}
-            >
+            <Link to={`/character/${character.id}`} key={character.id}>
               <div className="p-3 max-w-sm bg-[#c9c9c9] rounded shadow flex flex-col justify-between h-80 cursor-pointer">
                 <div className="flex justify-between">
                   <img
